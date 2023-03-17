@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Mvc.Infrastructure;
+@using Microsoft.AspNetCore.Mvc.Routing;
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject IActionContextAccessor _actionContextAccessor;
+@inject IUrlHelperFactory _urlFactory;
+@{
+	Layout = "Main.cshtml";
+
+	@await Component.InvokeAsync("Register")
+}

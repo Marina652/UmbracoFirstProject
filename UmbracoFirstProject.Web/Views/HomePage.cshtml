@@ -1,0 +1,35 @@
+﻿@using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.HomePage>;
+@inject IPublishedContentQuery _contentQuery;
+
+@{
+    Layout = "Main.cshtml";
+    var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+}
+
+@await Html.PartialAsync("Hero")
+
+@*<h4>@Umbraco.GetDictionaryValue("Item")</h4>*@
+
+@await Html.PartialAsync("Call To Action")
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <!-- Latests news Cards-->
+            @await Html.PartialAsync("Latest News")
+        </div>
+    </div>
+</div>
+
+<!-- Latest Tweets -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            @await Component.InvokeAsync("Twitter", new {twitterHandle ="HDeveloped", siteSettings = siteSettings})
+            @await Umbraco.RenderMacroAsync("GetLatestTweets", new {twitterHandle="HDeveloped"})
+      </div>
+    </div>
+</div>

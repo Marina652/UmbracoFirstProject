@@ -1,0 +1,7 @@
+﻿@inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
+
+@{
+    var siteSettings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("siteSettings").FirstOrDefault();
+
+    @await Component.InvokeAsync("RenderContactForm", new { siteSettings = siteSettings })
+}

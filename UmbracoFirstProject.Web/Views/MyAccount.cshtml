@@ -1,0 +1,12 @@
+﻿@using Umbraco.Cms.Core.Security;
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.MyAccount>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject IMemberManager _memberManager;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+@{
+	Layout = "Main.cshtml";
+}
+
+@await Component.InvokeAsync("RenderMyAccount", new {memberManager = _memberManager, httpContextAccessor = _httpContextAccessor})
+

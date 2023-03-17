@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<UmbracoFirstProject.Web.ViewModel.RegisterViewModel>
+@using UmbracoFirstProject.Web.Components;
+@using UmbracoFirstProject.Web.Controllers;
+@using UmbracoFirstProject.Web.ViewModel;
+@model RegisterViewModel;
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Register Form</h1>
+            @Html.ValidationSummary()
+
+             <form asp-action="HandleRegister" asp-controller="Register">
+                <h2 class="h3">Fill in the details below to register.</h2>
+                
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName, new {@class="form-control", @type="text"})
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName, new {@class="form-control", @type="text"})
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmailAddress)
+                    @Html.TextBoxFor(m => m.EmailAddress, new {@class="form-control", @type="text"})
+                    @Html.ValidationMessageFor(m => m.EmailAddress)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName, new {@class="form-control", @type="text"})
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.TextBoxFor(m => m.Password, new {@class="form-control", @type="password", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new {@class="form-control", @type="password", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                </div>
+
+                <button type="submit" value="Register" name="register-button" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>

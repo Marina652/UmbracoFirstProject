@@ -1,0 +1,53 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
+
+@{
+	var selection = Umbraco.Content(Guid.Parse("b7771caf-ea53-404f-a1b5-c78b17150bd0"))
+    .ChildrenOfType("newsArticle")
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate)
+    .Take(3);
+}
+
+<h2>Latest News</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck">
+                
+                @foreach (var item in selection)
+                {
+                    var imgCropper = item.Value<ImageCropperValue>("articleImage");
+                    var thumbUrl = imgCropper.Src + item.GetCropUrl("Thumb");
+                    
+                    <div class="card" style="width: 18rem;">
+                      <img class="card-img-top" src="@thumbUrl" alt="Card image cap6">
+                      <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Value("leadIn")</p>
+                      </div>
+
+                      <div class="card-footer d-flex justify-content-between">
+                          <div><a href="@item.Url()">Read more</a></div>
+                          <div class="social-icons text-muted">
+                              <a class="ml-2 mr-2" href="https://twitter.com/intent/tweet?text=@item.Value("leadIn")&amp;url=@item.Url(null, UrlMode.Absolute)">
+                                <i class="fab fa-twitter"></i>    
+                              </a>
+
+                              <a class="ml-2 mr-2" href="https://www.facebook.com/sharer.php?u=@item.Url(null, UrlMode.Absolute)">
+                                  <i class="fab fa-facebook"></i>
+                              </a>
+
+                              <a class="ml-2 mr-2" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=@item.Url(null, UrlMode.Absolute)">
+                                  <i class="fab fa-linkedin"></i>
+                               </a>
+
+                          </div>
+                      </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

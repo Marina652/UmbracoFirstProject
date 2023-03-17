@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<UmbracoFirstProject.Web.ViewModel.LoginViewModel>
+@model LoginViewModel;
+@inject IMemberManager _memberManager;
+@using Umbraco.Cms.Core.Security;
+@using Umbraco.Cms.Web.Common.Models
+@using Umbraco.Cms.Web.Common.Security
+@using Umbraco.Cms.Web.Website.Controllers
+@using Umbraco.Cms.Core.Services
+@using Umbraco.Extensions
+@using UmbracoFirstProject.Web.ViewModel;
+@inject IMemberExternalLoginProviders memberExternalLoginProviders
+@inject ITwoFactorLoginService twoFactorLoginService
+@inject IBackOfficeSecurityAccessor _backOfficeSecurity;
+@{
+    var myUser = await _memberManager.GetCurrentMemberAsync();
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+@if (_memberManager.IsLoggedIn())
+{
+    if(myUser != null)
+    {
+        <p><strong>Logged in as</strong> @myUser.UserName </p>
+        <a class="btn btn-danger" href="/logout">Log Out</a>
+        <i class="fa fa-arrow-right"></i>
+    }
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="HandleLogin" asp-controller="Login">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "Username"})
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                    </div>
+
+                    <button type="submit" value="Login" name="login" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                
+            </div>
+        </div>
+    </div>
+}
+
+
